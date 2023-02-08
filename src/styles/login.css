@@ -1,0 +1,17 @@
+.login-page {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-page button {
+    background: #fff;
+    border: 1px solid #aaa;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.196);
+    padding: 10px;
+    cursor: pointer;
+    font-size: 17px;
+    border-radius: 10px;
+}
