@@ -1,4 +1,3 @@
-import './App.css';
 import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
 import Dashboard from './views/Dashboard';
 import Login from './views/Login';
@@ -6,6 +5,7 @@ import Verify from './views/Verify';
 import { onAuthStateChanged } from 'firebase/auth';
 import { useEffect } from 'react';
 import { auth } from './firebaseConf';
+import Preview from './views/Preview';
 
 function App() {
   const navigate = useNavigate()
@@ -13,7 +13,7 @@ function App() {
   useEffect(() => {
     onAuthStateChanged(auth, (userAuth) => {
       if (userAuth) {
-        console.log(userAuth);
+        //console.log("userAuth",userAuth);
       } else {
         navigate("/login")
       }
@@ -26,6 +26,7 @@ function App() {
           <Route path='/' element={<Dashboard />} />
           <Route path='/login' element={<Login />} />
           <Route path='/verify/:cId' element={<Verify />} />
+          <Route path='/preview/:name/:cId/:id' element={<Preview/>}/>
         </Routes>
     </>
   );
