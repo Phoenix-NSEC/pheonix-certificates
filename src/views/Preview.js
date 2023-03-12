@@ -30,6 +30,24 @@ function Preview() {
   };
 
   console.log(cerData);
+  function getImageAsBase64(url) {
+    console.log(url)
+    
+    return fetch(url, {
+      method: 'GET',
+      mode:'no-cors'
+    })
+      .then(response => 
+        response.blob())
+      .then(blob => {
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader()
+          reader.onloadend = () => resolve(reader.result)
+          reader.onerror = reject
+          reader.readAsDataURL(blob)
+        })
+      })
+  }
 
   function getCoordinates(event) {
     // let xCord = event.clientX - 6;
@@ -37,28 +55,9 @@ function Preview() {
     //console.log("Coordinates: (" + xCord + ", " + yCord + ")");
 
     
-    canvas = ref1.current;
-    ctx = canvas.getContext("2d");
-
-    // Draw the image onto the canvas
-    //img.crossOrigin = "Anonymous";
-    if(cerData)
-      img.src = cerData.cert_url; // change url
-
-    img.onload = function () {
-      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-
-      // Add text to the image
-      if (cerData) {
-        ctx.font = "40px poppins";
-        ctx.fillStyle = cerData.name.fontColor;
-        ctx.fillText(name, cerData.name.xAxis, cerData.name.yAxis);
-        ctx.font = "15px poppins";
-        ctx.fillStyle = cerData.cId.fontColor;
-        ctx.fillText(id, cerData.cId.xAxis, cerData.cId.yAxis);
-      }
-    };
+    
   }
+
 
   /**
    * Function to download
@@ -77,7 +76,38 @@ function Preview() {
     navigate("/");
   };
 
+  useEffect(()=>{
+    canvas = ref1.current;
+    ctx = canvas.getContext("2d");
+
+    // Draw the image onto the canvas
+    //img.crossOrigin = "Anonymous";
+    async function renderImage()
+    {
+
+      if(cerData)
+        img.src = await getImageAsBase64("https://firebasestorage.googleapis.com/v0/b/certificates-phoenix.appspot.com/o/templates%2F01GRM7JDHQQR4H2WJK8J8FXP1Y.png?alt=media&token=eaa4485c-e202-4736-9ff8-fdbc87cd3d62"); // change url
+    }
+
+    renderImage();
+
+    img.onload = function () {
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+      // Add text to the image
+      if (cerData) {
+        ctx.font = "40px poppins";
+        ctx.fillStyle = cerData.name.fontColor;
+        ctx.fillText(name, cerData.name.xAxis, cerData.name.yAxis);
+        ctx.font = "15px poppins";
+        ctx.fillStyle = cerData.cId.fontColor;
+        ctx.fillText(id, cerData.cId.xAxis, cerData.cId.yAxis);
+      }
+    };
+  })
+
   useEffect(() => {
+
     onAuthStateChanged(auth, (userAuth) => {
       if (userAuth) {
         fetchCertificatesData();
