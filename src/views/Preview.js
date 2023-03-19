@@ -5,6 +5,8 @@ import { useRef } from "react";
 import { useNavigate, useParams } from "react-router";
 import { auth, db } from "../firebaseConf";
 import { BiArrowBack } from "react-icons/bi";
+import axios from "axios";
+import { render } from "@testing-library/react";
 
 function Preview() {
   const [cerData, setCerData] = useState();
@@ -31,22 +33,35 @@ function Preview() {
 
   console.log(cerData);
   function getImageAsBase64(url) {
-    console.log(url)
+    // console.log(url)
     
-    return fetch(url, {
-      method: 'GET',
-      mode:'no-cors'
-    })
-      .then(response => 
-        response.blob())
-      .then(blob => {
-        return new Promise((resolve, reject) => {
-          const reader = new FileReader()
-          reader.onloadend = () => resolve(reader.result)
-          reader.onerror = reject
-          reader.readAsDataURL(blob)
-        })
-      })
+    // return fetch(url, {
+    //   method: 'GET',
+    //   mode:'no-cors'
+    // })
+    //   .then(response => 
+    //     response.blob())
+    //   .then(blob => {
+    //     return new Promise((resolve, reject) => {
+    //       const reader = new FileReader()
+    //       reader.onloadend = () => resolve(reader.result)
+    //       reader.onerror = reject
+    //       reader.readAsDataURL(blob)
+    //     })
+    //   })
+
+    return axios.get(url, { responseType: 'blob' })
+    .then(response => {
+      const reader = new FileReader();
+      reader.readAsDataURL(response.data);
+      return new Promise((resolve, reject) => {
+        reader.onloadend = () => {
+          const base64data = reader.result;
+          resolve(base64data);
+        };
+        reader.onerror = reject;
+      });
+    });
   }
 
   function getCoordinates(event) {
@@ -86,7 +101,11 @@ function Preview() {
     {
 
       if(cerData)
-        img.src = await getImageAsBase64("https://firebasestorage.googleapis.com/v0/b/certificates-phoenix.appspot.com/o/templates%2F01GRM7JDHQQR4H2WJK8J8FXP1Y.png?alt=media&token=eaa4485c-e202-4736-9ff8-fdbc87cd3d62"); // change url
+      {
+        img.src = await getImageAsBase64(cerData.cert_url); // change url
+        console.log("base64 next")
+        console.log(img.src)
+      }
     }
 
     renderImage();
