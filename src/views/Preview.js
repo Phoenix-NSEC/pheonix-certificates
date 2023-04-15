@@ -111,7 +111,7 @@ function Preview() {
         />
       </div>
       <div className="flex flex-col overflow-hidden items-center justify-center h-[80vh] ">
-        <div className={`xsm:scale-[.45] md:scale-[1] ${CertLoading && 'bg-slate-200 animate-pulse' } `}>
+        <div className={`xsm:scale-[.4] md:scale-[1] ${CertLoading && 'bg-slate-200 animate-pulse' } `}>
           <canvas
             ref={ref1}
             className="canvas"
