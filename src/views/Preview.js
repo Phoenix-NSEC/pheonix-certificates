@@ -30,25 +30,8 @@ function Preview() {
       setCerData(doc.data());
     });
   };
-
-  console.log(cerData);
   function getImageAsBase64(url) {
-    // console.log(url)
-    
-    // return fetch(url, {
-    //   method: 'GET',
-    //   mode:'no-cors'
-    // })
-    //   .then(response => 
-    //     response.blob())
-    //   .then(blob => {
-    //     return new Promise((resolve, reject) => {
-    //       const reader = new FileReader()
-    //       reader.onloadend = () => resolve(reader.result)
-    //       reader.onerror = reject
-    //       reader.readAsDataURL(blob)
-    //     })
-    //   })
+   
 
     return axios.get(url, { responseType: 'blob' })
     .then(response => {
@@ -65,12 +48,7 @@ function Preview() {
   }
 
   function getCoordinates(event) {
-    // let xCord = event.clientX - 6;
-    // let yCord = event.clientY - 6;
-    //console.log("Coordinates: (" + xCord + ", " + yCord + ")");
 
-    
-    
   }
 
 
@@ -79,10 +57,7 @@ function Preview() {
    */
   const Download = async () => {
     var link = ref2.current;
-    console.log(link);
-    console.log(canvas)
     link.href = canvas.toDataURL();
-    console.log(canvas.toDataURL());
     link.download = "image-with-text.png"; //name of the downloaded certificate
     
   };
@@ -103,8 +78,6 @@ function Preview() {
       if(cerData)
       {
         img.src = await getImageAsBase64(cerData.cert_url); // change url
-        console.log("base64 next")
-        console.log(img.src)
       }
     }
 
@@ -136,26 +109,27 @@ function Preview() {
 
   return (
     <>
-      <div className="p-5">
+      <div className="p-5 shadow-md">
         <BiArrowBack
           className="cursor-pointer"
           size={"20px"}
           onClick={backHandler}
         />
       </div>
-      <div className="flex flex-col overflow-y-auto items-center justify-center h-[80vh]">
-        <div className="h-[60vh] ">
+      <div className="flex flex-col overflow-hidden items-center justify-center h-[80vh] ">
+        <div className="xsm:scale-[.45] md:scale-[1]">
           <canvas
             ref={ref1}
             className="canvas"
             height="500"
             width="800"
             onMouseMove={getCoordinates}
+            
           />
         </div>
 
         <a ref={ref2} id="save" onClick={Download}>
-          <button className="inline-block self-center bg-blue-600 text-white font-bold rounded-lg px-6 py-2 uppercase  text-sm hover:bg-blue-600">
+          <button className="inline-block self-center bg-blue-600 text-white font-bold rounded-lg px-6 py-3 shadow-md uppercase  text-sm hover:bg-blue-600 md:mt-5">
             Download
           </button>
         </a>

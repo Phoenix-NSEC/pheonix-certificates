@@ -63,7 +63,7 @@ const Dashboard = () => {
         // Sign-out successful.
       })
       .catch((error) => {
-        console.log(error.message);
+//error
       });
   };
 

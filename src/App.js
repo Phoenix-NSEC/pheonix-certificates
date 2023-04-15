@@ -13,7 +13,6 @@ function App() {
   useEffect(() => {
     onAuthStateChanged(auth, (userAuth) => {
       if (userAuth) {
-        //console.log("userAuth",userAuth);
       } else {
         navigate("/login")
       }
