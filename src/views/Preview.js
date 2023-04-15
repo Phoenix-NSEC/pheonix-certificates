@@ -19,7 +19,7 @@ function Preview() {
 
   const ref1 = useRef(null);
   const ref2 = useRef(null);
-
+  const [CertLoading,setCertloading] = useState(true)
   const fetchCertificatesData = async () => {
     const q = query(collection(db, "certMetas"), where("eId", "==", cId));
 
@@ -50,10 +50,6 @@ function Preview() {
 
   }
 
-
-  /**
-   * Function to download
-   */
   const Download = async () => {
     var link = ref2.current;
     link.href = canvas.toDataURL();
@@ -69,14 +65,13 @@ function Preview() {
     canvas = ref1.current;
     ctx = canvas.getContext("2d");
 
-    // Draw the image onto the canvas
-    //img.crossOrigin = "Anonymous";
     async function renderImage()
     {
 
       if(cerData)
       {
         img.src = await getImageAsBase64(cerData.cert_url); // change url
+        setCertloading(false)
       }
     }
 
@@ -116,7 +111,7 @@ function Preview() {
         />
       </div>
       <div className="flex flex-col overflow-hidden items-center justify-center h-[80vh] ">
-        <div className="xsm:scale-[.45] md:scale-[1]">
+        <div className={`xsm:scale-[.45] md:scale-[1] ${CertLoading && 'bg-slate-200 animate-pulse' } `}>
           <canvas
             ref={ref1}
             className="canvas"
