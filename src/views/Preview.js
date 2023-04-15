@@ -6,12 +6,11 @@ import { useNavigate, useParams } from "react-router";
 import { auth, db } from "../firebaseConf";
 import { BiArrowBack } from "react-icons/bi";
 import axios from "axios";
-import { render } from "@testing-library/react";
 
 function Preview() {
   const [cerData, setCerData] = useState();
 
-  const { name, cId, id } = useParams();
+  const { name, cId, id ,eventName} = useParams();
 
   const navigate = useNavigate();
   let canvas;
@@ -58,7 +57,7 @@ function Preview() {
   const Download = async () => {
     var link = ref2.current;
     link.href = canvas.toDataURL();
-    link.download = "image-with-text.png"; //name of the downloaded certificate
+    link.download = `${eventName}_${name}.png`; //name of the downloaded certificate
     
   };
 

@@ -25,7 +25,7 @@ function App() {
           <Route path='/' element={<Dashboard />} />
           <Route path='/login' element={<Login />} />
           <Route path='/verify/:cId' element={<Verify />} />
-          <Route path='/preview/:name/:cId/:id' element={<Preview/>}/>
+          <Route path='/preview/:eventName/:name/:cId/:id' element={<Preview/>}/>
         </Routes>
     </>
   );

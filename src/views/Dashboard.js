@@ -67,8 +67,8 @@ const Dashboard = () => {
       });
   };
 
-  const previewHandler = (cId, id) => {
-    navigate(`/preview/${allData[0].name}/${cId}/${id}`);
+  const previewHandler = (cId, id , eventName) => {
+    navigate(`/preview/${eventName}/${allData[0].name}/${cId}/${id}`);
   };
 
   useEffect(() => {
@@ -134,7 +134,7 @@ const Dashboard = () => {
                         <button
                           className="inline-block self-center bg-blue-600 text-white font-bold rounded-lg md:px-6 py-2 uppercase p-3  text-sm hover:bg-blue-600"
                           onClick={() => {
-                            previewHandler(e.eventId, e.id);
+                            previewHandler(e.eventId, e.id ,e.event);
                           }}
                         >
                           Download
