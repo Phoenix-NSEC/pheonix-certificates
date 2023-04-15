@@ -7,6 +7,7 @@ import {
 } from "firebase/auth";
 import { auth, provider } from "../firebaseConf";
 import { useNavigate } from "react-router-dom";
+import { FcGoogle } from "react-icons/fc";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -39,9 +40,10 @@ const Login = () => {
   return (
     <div className="flex min-h-screen justify-center items-center">
       <button
-        className="inline-block self-center bg-blue-600 text-white font-bold rounded-lg px-6 py-2 uppercase  text-sm hover:bg-blue-600"
+        className="flex gap-4 self-center border-2 text-blue-600 border-blue-600 shadow-md font-bold rounded-full px-6 py-3 uppercase  text-sm"
         onClick={loginHandler}
       >
+        <FcGoogle size={20}/>
         Sign In With Google
       </button>
     </div>
