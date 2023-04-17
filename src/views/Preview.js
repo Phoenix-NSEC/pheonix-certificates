@@ -111,6 +111,9 @@ function Preview() {
         />
       </div>
       <div className="flex flex-col overflow-hidden items-center justify-center h-[80vh] ">
+        <div className="eventname font-extrabold text-[1.5rem] text-gray-700 text-center">
+          {eventName}
+        </div>
         <div className={`xsm:scale-[.4] md:scale-[1] ${CertLoading && 'bg-slate-200 animate-pulse' } `}>
           <canvas
             ref={ref1}

@@ -80,7 +80,7 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen overflow-x-hidden">
       <div className=" p-3 flex justify-between items-center">
         {allData[0] ? (
           <h1 className="text-blue-400 text-md md:text-2xl mb-2 md:p-3 ">
@@ -100,38 +100,31 @@ const Dashboard = () => {
       </div>
 
       {allData[0] ? (
-        <div className="p-5 flex flex-col justify-center items-center bg-gray-100">
-          <h1 className="text-2xl text-blue-400 font-bold p-5 text-center mb-2">
-            CERTIFICATES
-          </h1>
-          <div className="overflow-auto md:w-2/3 rounded-lg shadow block ">
-            <div className="w-full">
-              <div className="bg-gray-50 border-b-2 border-gray-200">
-                <ul className="flex justify-between w-full">
-                  <li className="p-3 md:pl-7 text-sm md:text-lg font-semibold text-left">
-                    Event
-                  </li>
-                  <li className="p-3 pr-[92px] md:pr-[115px] text-sm md:text-lg font-semibold tracking-wide text-left">
-                    Date
-                  </li>
-                  <li className=" p-3 text-sm md:text-lg text-center font-semibold tracking-wide "></li>
-                </ul>
-              </div>
-              <div className=" divide-gray-100">
-                {certData.map((e) => {
-                  return (
-                    <ul
-                      key={e.id}
-                      className="bg-white flex justify-between items-center mb-2"
-                    >
-                      <li className="p-3 md:font-bold md:text-lg text-sm text-gray-700 whitespace-nowrap">
-                        {e.event}
-                      </li>
-                      <li className="p-3 md:text-md md:font-bold text-sm text-gray-700 whitespace-nowrap">
-                        {e.eventDate}
-                      </li>
-                      <li className="p-3  text-sm text-gray-700 whitespace-nowrap">
-                        <button
+       
+        <div class="flex flex-col">
+  <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+    <div class="inline-block min-w-full py-2 sm:px-6 lg:px-8">
+      <div class="overflow-hidden">
+        <table class="min-w-full text-left text-sm font-light">
+          <thead class="border-b font-medium dark:border-neutral-500">
+            <tr>
+              <th scope="col" class="px-6 py-4">Event</th>
+              <th scope="col" class="px-6 py-4 text-center">Date</th>
+              <th scope="col" class="px-6 py-4 text-center">Download</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            {
+certData.map((e) => {
+             return <tr
+              key={e.id} class="border-b transition duration-300 ease-in-out hover:bg-neutral-100 dark:border-neutral-500 dark:hover:bg-neutral-600">
+            
+              <td class="whitespace-nowrap px-6 py-4 font-">{e.event}</td>
+              <td class="whitespace-nowrap px-6 py-4 text-center">{e.eventDate}</td>
+              <td class="whitespace-nowrap px-6 py-4 text-center">
+
+              <button
                           className="inline-block self-center bg-blue-600 text-white font-bold rounded-lg md:px-6 py-2 uppercase p-3  text-sm hover:bg-blue-600"
                           onClick={() => {
                             previewHandler(e.eventId, e.id ,e.event);
@@ -139,14 +132,17 @@ const Dashboard = () => {
                         >
                           Download
                         </button>
-                      </li>
-                    </ul>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
-        </div>
+              </td>
+            </tr>
+            })
+          }
+            
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
       ) : (
         <div className="text-center h-[70vh] text-blue-500 flex justify-center items-center font-bold text-[30px]">
           No Certificates Available !!!
