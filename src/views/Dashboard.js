@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { auth, db } from "../firebaseConf";
+import { auth, db ,maindb } from "../firebaseConf";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { Outlet, useLocation, useNavigate  } from "react-router";
@@ -8,10 +8,31 @@ import { BiArrowBack } from "react-icons/bi";
 
 const Dashboard = () => {
   const [allData, setAllData] = useState([]);
-
+  const [isRegistred,setIsRegistered] = useState(false)
   const navigate = useNavigate();
   const {pathname} = useLocation();
+  useEffect(()=>{
+    async function isRegistredCheck(email)
+    {
 
+      const q = query(
+        collection(maindb, "registrations"),
+        where("email", "==", email) // replace "shreyam@apiffer.in" with eamil
+        );
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
+          console.log(doc.data())
+          setIsRegistered(true)
+        });
+        
+      }
+      onAuthStateChanged(auth, (userAuth) => {
+        if (userAuth) {
+          isRegistredCheck(userAuth.email);
+        }
+      });
+   ;
+  },[])
   
   const fetchCertificates = async (email) => {
     const q = query(
@@ -103,7 +124,7 @@ const Dashboard = () => {
       </div>
      {pathname==='/' && <div className="options flex flex-wrap gap-5 p-3 justify-center items-center">
         <div className="certificate w-[20rem] h-[10rem] bg-blue-400 hover:bg-blue-600 transition-all cursor-pointer p-5 text-white text-xl font-semibold uppercase" onClick={()=>navigate('/certificates')}>Cetrificates</div>
-        <div className="idcards w-[20rem] h-[10rem] bg-blue-400 hover:bg-blue-600 transition-all cursor-pointer text-white p-5 text-xl font-semibold uppercase" onClick={()=>navigate('/idcard')}>Idcard</div>
+        {isRegistred && <div className="idcards w-[20rem] h-[10rem] bg-blue-400 hover:bg-blue-600 transition-all cursor-pointer text-white p-5 text-xl font-semibold uppercase" onClick={()=>navigate('/idcard')}>Idcard</div>}
       </div>}
       <Outlet/>
     </div>
