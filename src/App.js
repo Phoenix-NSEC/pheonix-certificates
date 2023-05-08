@@ -6,6 +6,7 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { useEffect } from 'react';
 import { auth } from './firebaseConf';
 import Preview from './views/Preview';
+import CertificateList from './components/CertificateList';
 
 function App() {
   const navigate = useNavigate()
@@ -22,10 +23,20 @@ function App() {
   return (
     <>
         <Routes>
-          <Route path='/' element={<Dashboard />} />
           <Route path='/login' element={<Login />} />
           <Route path='/verify/:cId' element={<Verify />} />
-          <Route path='/preview/:eventName/:name/:cId/:id' element={<Preview/>}/>
+
+          <Route path="/" element={<Dashboard />}>
+              <Route path='/certificates'>
+                <Route path='' element={<CertificateList/>}/>
+                <Route path='preview/:eventName/:name/:cId/:id' element={<Preview/>}/>
+              </Route>
+              <Route path='idcard'>
+                <Route path='' element={<>idcard list</>}/>
+                <Route path='preview/:eventName/:name/:cId/:id' element={<Preview/>}/>
+              </Route>
+          </Route>
+              <Route path='*' element={<>404</>}/>
         </Routes>
     </>
   );

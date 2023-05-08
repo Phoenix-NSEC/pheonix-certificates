@@ -6,6 +6,7 @@ import { useNavigate, useParams } from "react-router";
 import { auth, db } from "../firebaseConf";
 import { BiArrowBack } from "react-icons/bi";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 function Preview() {
   const [cerData, setCerData] = useState();
@@ -103,13 +104,6 @@ function Preview() {
 
   return (
     <>
-      <div className="p-5 shadow-md">
-        <BiArrowBack
-          className="cursor-pointer"
-          size={"20px"}
-          onClick={backHandler}
-        />
-      </div>
       <div className="flex flex-col overflow-hidden items-center justify-center h-[80vh] ">
         <div className="eventname font-extrabold text-[1.5rem] text-gray-700 text-center">
           {eventName}
@@ -124,12 +118,19 @@ function Preview() {
             
           />
         </div>
+      <div className="flex gap-5">
 
         <a ref={ref2} id="save" onClick={Download}>
           <button className="inline-block self-center bg-blue-600 text-white font-bold rounded-lg px-6 py-3 shadow-md uppercase  text-sm hover:bg-blue-600 md:mt-5">
             Download
           </button>
         </a>
+        <Link to="/certificates">
+        <button className="inline-block self-center bg-blue-600 text-white font-bold rounded-lg px-6 py-3 shadow-md uppercase  text-sm hover:bg-blue-600 md:mt-5">
+            Back
+          </button>
+        </Link>
+      </div>
       </div>
     </>
   );

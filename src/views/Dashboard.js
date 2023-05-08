@@ -2,15 +2,17 @@ import React, { useEffect, useState } from "react";
 import { auth, db } from "../firebaseConf";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { onAuthStateChanged, signOut } from "firebase/auth";
-import { useNavigate } from "react-router";
+import { Outlet, useLocation, useNavigate  } from "react-router";
 import { BiPowerOff } from "react-icons/bi";
+import { BiArrowBack } from "react-icons/bi";
 
 const Dashboard = () => {
   const [allData, setAllData] = useState([]);
-  const [certData, setCertData] = useState([]);
 
   const navigate = useNavigate();
+  const {pathname} = useLocation();
 
+  
   const fetchCertificates = async (email) => {
     const q = query(
       collection(db, "participents"),
@@ -34,7 +36,6 @@ const Dashboard = () => {
         certificateSnap.forEach((doc) => {
           cerData.push(doc.data());
         });
-        setCertData(cerData);
       } else {
         const allCertificateRef = collection(db, "cIds");
 
@@ -52,7 +53,6 @@ const Dashboard = () => {
             }
           }
         }
-        setCertData(cerData);
       }
     }
   };
@@ -82,6 +82,9 @@ const Dashboard = () => {
   return (
     <div className="min-h-screen overflow-x-hidden">
       <div className=" p-3 flex justify-between items-center">
+      {pathname!=='/' && <BiArrowBack size={20}
+      onClick={()=>navigate(-1)}
+      />}
         {allData[0] ? (
           <h1 className="text-blue-400 text-md md:text-2xl mb-2 md:p-3 ">
             WELCOME{" "}
@@ -98,56 +101,11 @@ const Dashboard = () => {
           onClick={logoutHandler}
         />
       </div>
-
-      {allData[0] ? (
-       
-        <div class="flex flex-col">
-  <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
-    <div class="inline-block min-w-full py-2 sm:px-6 lg:px-8">
-      <div class="overflow-hidden">
-        <table class="min-w-full text-left text-sm font-light">
-          <thead class="border-b font-medium dark:border-neutral-500">
-            <tr>
-              <th scope="col" class="px-6 py-4">Event</th>
-              <th scope="col" class="px-6 py-4 text-center">Date</th>
-              <th scope="col" class="px-6 py-4 text-center">Download</th>
-            </tr>
-          </thead>
-          <tbody>
-
-            {
-certData.map((e) => {
-             return <tr
-              key={e.id} class="border-b transition duration-300 ease-in-out hover:bg-neutral-100 dark:border-neutral-500 dark:hover:bg-neutral-600">
-            
-              <td class="whitespace-nowrap px-6 py-4 font-">{e.event}</td>
-              <td class="whitespace-nowrap px-6 py-4 text-center">{e.eventDate}</td>
-              <td class="whitespace-nowrap px-6 py-4 text-center">
-
-              <button
-                          className="inline-block self-center bg-blue-600 text-white font-bold rounded-lg md:px-6 py-2 uppercase p-3  text-sm hover:bg-blue-600"
-                          onClick={() => {
-                            previewHandler(e.eventId, e.id ,e.event);
-                          }}
-                        >
-                          Download
-                        </button>
-              </td>
-            </tr>
-            })
-          }
-            
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-</div>
-      ) : (
-        <div className="text-center h-[70vh] text-blue-500 flex justify-center items-center font-bold text-[30px]">
-          No Certificates Available !!!
-        </div>
-      )}
+     {pathname==='/' && <div className="options flex flex-wrap gap-5 p-3 justify-center items-center">
+        <div className="certificate w-[20rem] h-[10rem] bg-blue-400 hover:bg-blue-600 transition-all cursor-pointer p-5 text-white text-xl font-semibold uppercase" onClick={()=>navigate('/certificates')}>Cetrificates</div>
+        <div className="idcards w-[20rem] h-[10rem] bg-blue-400 hover:bg-blue-600 transition-all cursor-pointer text-white p-5 text-xl font-semibold uppercase" onClick={()=>navigate('/idcard')}>Idcard</div>
+      </div>}
+      <Outlet/>
     </div>
   );
 };
