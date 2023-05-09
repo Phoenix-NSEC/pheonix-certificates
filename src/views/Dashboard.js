@@ -12,8 +12,8 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const {pathname} = useLocation();
   useEffect(()=>{
-    async function isRegistredCheck(email)
-    {
+      async function isRegistredCheck(email)
+      {
 
       const q = query(
         collection(maindb, "registrations"),
@@ -21,8 +21,9 @@ const Dashboard = () => {
         );
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
-          console.log(doc.data())
-          setIsRegistered(true)
+          let user = doc.data()
+          if(user.isVerified)
+            setIsRegistered(true)
         });
         
       }
@@ -30,8 +31,7 @@ const Dashboard = () => {
         if (userAuth) {
           isRegistredCheck(userAuth.email);
         }
-      });
-   ;
+      })
   },[])
   
   const fetchCertificates = async (email) => {

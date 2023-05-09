@@ -73,8 +73,12 @@ function Idcard() {
   };
 
   useEffect(()=>{
-    canvas = ref1.current;
-    ctx = canvas.getContext("2d");
+    if(userData?.isVerified)
+    {
+
+      canvas = ref1.current;
+      ctx = canvas.getContext("2d");
+    }
 
     async function renderImage()
     {
@@ -97,7 +101,7 @@ function Idcard() {
         ctx.font = "30px poppins";
         ctx.fillStyle = idCard.name.fontColor;
         ctx.fillText(userData.name, idCard.name.x, idCard.name.y);
-        ctx.font = "15px poppins";
+        ctx.font = "13.5px poppins";
         ctx.fillStyle = userData.id.fontColor;
         ctx.fillText(userData.id, idCard.idRef.x, idCard.idRef.y);
         ctx.font = "15px poppins";
@@ -133,25 +137,27 @@ avatar.onload = ()=>{
   return (
     <>
       <div className="flex flex-col overflow-hidden items-center justify-center h-[80vh] ">
-        {/* <div className="eventname font-extrabold text-[1.5rem] text-gray-700 text-center">
-          {idCard?.type} Card
-        </div> */}
-        <div className={`xsm:scale-[.4] md:scale-[1] ${CertLoading && 'bg-slate-200 animate-pulse' } border-2 border-blue-300`}>
+        {userData?.isVerified ? <div className={`xsm:scale-[.4] md:scale-[1] ${CertLoading && 'bg-slate-200 animate-pulse' } border-2 border-blue-300`}>
           <canvas
             ref={ref1}
             className="canvas"
             height="500"
             width="800" 
           />
-        </div>
+        </div> :
+        <div className={`xsm:scale-[.4] md:scale-[1] 'bg-slate-200 animate-pulse flex justify-center items-center h-[70%] w-[70%]`}>
+        Account isn't verified yet !
+      </div>
+        
+        }
       <div className="flex gap-5">
 
-        <a ref={ref2} id="save" onClick={Download}>
+      {userData?.isVerified && <a ref={ref2} id="save" onClick={Download}>
           <button className="inline-block self-center bg-blue-600 text-white font-bold rounded-lg px-6 py-3 shadow-md uppercase  text-sm hover:bg-blue-600 md:mt-5">
             Download
           </button>
-        </a>
-        <Link to="/certificates">
+        </a>}
+        <Link to="/">
         <button className="inline-block self-center bg-blue-600 text-white font-bold rounded-lg px-6 py-3 shadow-md uppercase  text-sm hover:bg-blue-600 md:mt-5">
             Back
           </button>
