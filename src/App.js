@@ -7,6 +7,7 @@ import { useEffect } from 'react';
 import { auth } from './firebaseConf';
 import Preview from './views/Preview';
 import CertificateList from './components/CertificateList';
+import Idcard from './components/Idcard';
 
 function App() {
   const navigate = useNavigate()
@@ -31,10 +32,8 @@ function App() {
                 <Route path='' element={<CertificateList/>}/>
                 <Route path='preview/:eventName/:name/:cId/:id' element={<Preview/>}/>
               </Route>
-              <Route path='idcard'>
-                <Route path='' element={<>idcard list</>}/>
-                <Route path='preview/:eventName/:name/:cId/:id' element={<Preview/>}/>
-              </Route>
+              <Route path='user' element={<Idcard/>} />
+               
           </Route>
               <Route path='*' element={<>404</>}/>
         </Routes>
