@@ -36,7 +36,6 @@ function Preview() {
 
         return axios.get(url, { responseType: 'blob' })
             .then(response => {
-                console.log(response)
                 const reader = new FileReader();
                 reader.readAsDataURL(response.data);
                 return new Promise((resolve, reject) => {
@@ -117,8 +116,8 @@ function Preview() {
         width = "800"
         onMouseMove = { getCoordinates }
 
-        /> <
-        /div> <
+        /> < /
+        div > <
         div className = "flex gap-5" >
 
         <
@@ -128,16 +127,16 @@ function Preview() {
         <
         button className = "inline-block self-center bg-blue-600 text-white font-bold rounded-lg px-6 py-3 shadow-md uppercase  text-sm hover:bg-blue-600 md:mt-5" >
         Download <
-        /button> <
-        /a> <
+        /button> < /
+        a > <
         Link to = "/certificates" >
         <
         button className = "inline-block self-center bg-blue-600 text-white font-bold rounded-lg px-6 py-3 shadow-md uppercase  text-sm hover:bg-blue-600 md:mt-5" >
         Back <
-        /button> <
-        /Link> <
-        /div> <
-        /div> <
+        /button> < /
+        Link > <
+        /div> < /
+        div > <
         />
     );
 }

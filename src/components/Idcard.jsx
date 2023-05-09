@@ -2,18 +2,13 @@ import { onAuthStateChanged } from "firebase/auth";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { useRef } from "react";
-import { useNavigate, useParams } from "react-router";
 import { auth, db, maindb } from "../firebaseConf";
-import { BiArrowBack } from "react-icons/bi";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
 function Idcard() {
   const [userData, setUserData] = useState();
   const [idCard,setIdcard] = useState();
-  console.log(idCard)
-  console.log(userData)
-  const navigate = useNavigate();
   let canvas;
   let ctx;
   let img = new Image();
@@ -50,8 +45,6 @@ function Idcard() {
 
     return axios.get(url, { responseType: 'blob' })
     .then(response => {
-        console.log('here res')
-        console.log(response)
       const reader = new FileReader();
       reader.readAsDataURL(response.data);
       return new Promise((resolve, reject) => {
@@ -113,7 +106,6 @@ function Idcard() {
     }
 };
 avatar.onload = ()=>{
-    console.log(idCard)
     ctx.drawImage(avatar,idCard.image.x,idCard.image.y,idCard.image.w,idCard.image.h )
 }
   })
