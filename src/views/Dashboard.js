@@ -123,7 +123,7 @@ const Dashboard = () => {
         />
       </div>
      {pathname==='/' && <div className="options flex flex-wrap gap-5 p-3 justify-center items-center">
-        <div className="certificate w-[20rem] h-[10rem] bg-blue-400 hover:bg-blue-600 transition-all cursor-pointer p-5 text-white text-xl font-semibold uppercase" onClick={()=>navigate('/certificates')}>Cetrificates</div>
+        <div className="certificate w-[20rem] h-[10rem] bg-blue-400 hover:bg-blue-600 transition-all cursor-pointer p-5 text-white text-xl font-semibold uppercase" onClick={()=>navigate('/certificates')}>Certificates</div>
         {isRegistred && <div className="idcards w-[20rem] h-[10rem] bg-blue-400 hover:bg-blue-600 transition-all cursor-pointer text-white p-5 text-xl font-semibold uppercase" onClick={()=>navigate('/user')}>Idcard</div>}
       </div>}
       <Outlet/>
